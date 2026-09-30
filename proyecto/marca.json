@@ -1,0 +1,19 @@
+{
+  "configurada": false,
+  "nombre": "",
+  "usuario": "",
+  "estilo": "",
+  "colorPrincipal": "#FFD400",
+  "colorTextoSobrePrincipal": "#111111",
+  "colorSubtitulos": "#FFFFFF",
+  "colorBorde": "#000000",
+  "logo": null,
+  "logoComoMarcaDeAgua": false,
+  "esquinaLogo": "arriba-derecha",
+  "llamadoAccion": "",
+  "musica": null,
+  "volumenMusica": 0.08,
+  "sonidos": true,
+  "barraProgreso": false,
+  "subtitulos": {"tamano": 72, "posicionVertical": 0.7, "mayusculas": true, "msPorPagina": 900}
+}

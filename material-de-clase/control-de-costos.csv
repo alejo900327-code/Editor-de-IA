@@ -1,0 +1,2 @@
+﻿Mes;Plan de IA (tu moneda);Otros gastos (música, b-roll, etc.);Horas dedicadas;Valor de tu hora;Videos terminados;Costo de herramientas por video;Costo total por video
+Ejemplo;80000;0;6;30000;12;=(B2+C2)/F2;=(B2+C2+D2*E2)/F2

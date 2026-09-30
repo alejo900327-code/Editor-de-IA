@@ -1,0 +1,47 @@
+{
+  "video": null,
+  "duracionOriginal": 0,
+  "formato": {
+    "ancho": 1080,
+    "alto": 1920,
+    "fps": 30
+  },
+  "encuadre": "llenar",
+  "volumenVoz": 1,
+  "cortes": [],
+  "subtitulos": {
+    "activos": true,
+    "fuente": "Montserrat",
+    "tamano": 72,
+    "color": "#FFFFFF",
+    "colorResaltado": "#FFD400",
+    "borde": "#000000",
+    "posicionVertical": 0.7,
+    "mayusculas": true,
+    "msPorPagina": 900
+  },
+  "estiloTitulos": {
+    "fondo": "#FFD400",
+    "color": "#111111"
+  },
+  "marcaDeAgua": {
+    "archivo": null,
+    "esquina": "arriba-derecha",
+    "ancho": 18,
+    "opacidad": 0.9
+  },
+  "sonidos": {
+    "activos": true,
+    "volumen": 0.5,
+    "alTitulo": "pop.wav",
+    "alZoom": "whoosh.wav",
+    "alEmoji": "pop.wav",
+    "alBroll": "whoosh.wav"
+  },
+  "animaciones": [],
+  "musica": {
+    "archivo": null,
+    "volumen": 0.08
+  },
+  "barraProgreso": false
+}
