@@ -14,7 +14,8 @@
     "revisar": "tsc && node scripts/verificar.mjs",
     "verificar": "node scripts/verificar.mjs",
     "exportar": "node scripts/exportar.mjs",
-    "versiones": "node scripts/versiones.mjs"
+    "versiones": "node scripts/versiones.mjs",
+    "sincronizar-skills": "node scripts/sincronizar-skills.mjs"
   },
   "dependencies": {
     "@remotion/captions": "4.0.530",

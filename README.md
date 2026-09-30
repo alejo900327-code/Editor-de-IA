@@ -1,18 +1,22 @@
 # Editor de video con IA — Millonarios Conscientes
 
-Edita tus videos hablando con Claude: **cortes**, **subtítulos animados**, **animaciones**,
+Edita tus videos hablando con una IA (**Claude Code** o **Codex**): **cortes**, **subtítulos animados**, **animaciones**,
 **emojis**, **b-roll**, **efectos de sonido**, **tu marca** y **varios formatos**, sin saber
 programar y sin pagar programas de edición.
 
-Le dices a Claude qué quieres ("quita los silencios", "pon los subtítulos en amarillo",
-"agrega un título cuando digo los 3 errores") y él lo hace con código (Remotion) en tu computadora.
+Le dices a la IA qué quieres ("quita los silencios", "pon los subtítulos en amarillo",
+"agrega un título cuando digo los 3 errores") y ella lo hace con código (Remotion) en tu computadora.
+
+> **¿Claude Code o Codex?** Funciona con los dos. Esta guía usa Claude Code; si usas Codex,
+> mira el recuadro del Paso 2 y escribe las skills con `$` en vez de `/`
+> (por ejemplo, `$editar-video` en vez de `/editar-video`).
 
 ---
 
 ## Antes de empezar necesitas
 
 - Una computadora **Mac o Windows** con al menos **3 GB libres**.
-- Una cuenta de **Claude Pro o Max** (Claude Code viene incluido).
+- Una cuenta de **Claude Pro o Max** (para Claude Code) **o** de **ChatGPT Plus o Pro** (para Codex).
 - Un video hablado grabado con el móvil o la cámara (MP4 o MOV).
 - Conexión a internet la primera vez (para instalar). Después funciona casi todo sin internet.
 
@@ -35,7 +39,7 @@ xcode-select --install
 **Solo en Windows:** instala **Git for Windows** desde https://git-scm.com/download/win
 (todo con las opciones por defecto). Claude Code lo necesita.
 
-## Paso 2 — Instala Claude Code (una sola vez)
+## Paso 2 — Instala Claude Code o Codex (una sola vez)
 
 **Opción fácil:** descarga la app de escritorio de Claude desde https://claude.ai/download,
 inicia sesión y abre la pestaña **Code**.
@@ -47,6 +51,12 @@ inicia sesión y abre la pestaña **Code**.
 
 Después escribe `claude` e inicia sesión con tu cuenta.
 
+> **Si prefieres Codex:** instala la app de Codex o, en la terminal,
+> `npm install -g @openai/codex`, y entra con tu cuenta de ChatGPT escribiendo `codex`.
+> En los pasos siguientes abre la carpeta del editor en Codex en lugar de Claude Code y
+> escribe las skills con `$` (`$instalar-editor`, `$editar-video`, …). Cuando Codex pida
+> permiso para usar internet (instalar o descargar Whisper), apruébalo.
+
 ## Paso 3 — Descarga el editor
 
 1. En esta página de GitHub pulsa el botón verde **Code** y luego **Download ZIP**.
@@ -55,7 +65,7 @@ Después escribe `claude` e inicia sesión con tu cuenta.
 
 > ¿Sabes usar Git? También puedes hacer `git clone https://github.com/alejo900327-code/Editor-de-IA.git`
 
-## Paso 4 — Abre la carpeta en Claude Code
+## Paso 4 — Abre la carpeta en Claude Code (o Codex)
 
 - **App de escritorio:** en la pestaña Code, elige la carpeta del editor como proyecto.
 - **Terminal:** entra a la carpeta y abre Claude:
@@ -75,6 +85,9 @@ Escribe en Claude:
 
 Claude revisa tu computadora, instala lo necesario y hace una prueba. Tarda unos minutos.
 Si te pide permiso para ejecutar un comando, lee qué hace y acepta.
+
+> **Para practicar:** en `material-de-clase/guiones-de-practica.md` tienes 3 guiones cortos
+> listos para grabar, y en `material-de-clase/plantillas-de-pedidos.md`, pedidos para copiar y pegar.
 
 ## Paso 6 — Crea tu kit de marca (recomendado, una sola vez)
 
@@ -195,7 +208,9 @@ Mi-Editor/
 │   ├── edicion.json         ← la edición (cortes, estilo, animaciones)
 │   ├── transcripcion.txt    ← lo que dices, con tiempos
 │   └── versiones/           ← copias de seguridad de cada etapa
-├── .claude/skills/     ← las skills del editor
+├── material-de-clase/  ← guiones de práctica, plantillas de pedidos y hojas de seguimiento
+├── .claude/skills/     ← las skills (Claude Code)
+├── .agents/skills/     ← las mismas skills (Codex)
 └── src/                ← el código del editor (no hace falta tocarlo)
 ```
 
@@ -203,7 +218,8 @@ Mi-Editor/
 
 | Problema | Solución |
 |---|---|
-| `npm` o `node` "no se reconoce" | Instala Node.js (Paso 1) y **cierra y vuelve a abrir** Claude Code |
+| `npm` o `node` "no se reconoce" | Instala Node.js (Paso 1) y **cierra y vuelve a abrir** Claude Code o Codex |
+| La skill no aparece | Comprueba que abriste la carpeta del editor (no una carpeta de dentro) y reinicia el agente |
 | La transcripción falla en Mac | Ejecuta `xcode-select --install` (Paso 1) y pide `/instalar-editor` de nuevo |
 | Windows bloquea `main.exe` | Es Whisper: permítelo en el antivirus |
 | Transcribe mal nombres o marcas | Dile a Claude la palabra correcta, o pide "transcribe con el modelo medium" |

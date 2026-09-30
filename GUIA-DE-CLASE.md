@@ -12,8 +12,10 @@ Lo más importante es comprobar que la transcripción (Whisper) funciona en tu s
 - [ ] Anotar cuánto tardó cada paso en tu computadora (para avisar a los alumnos).
 - [ ] Si puedes, probar en una Mac **y** en un Windows.
 - [ ] Tener a mano un video de demostración ya grabado y un logo PNG.
-- [ ] Pedir a los alumnos que traigan **Node.js y Claude Code ya instalados** (Pasos 1 y 2)
-      y un video corto grabado. Es lo que más tiempo quita en clase.
+- [ ] Pedir a los alumnos que traigan **Node.js y Claude Code (o Codex) ya instalados**
+      (Pasos 1 y 2) y uno de los guiones de `material-de-clase/guiones-de-practica.md` ya
+      grabado. Es lo que más tiempo quita en clase.
+- [ ] Si algún alumno usa Codex, probar también `$instalar-editor` y `$editar-video` en Codex.
 
 ## Agenda sugerida (90 min)
 
@@ -76,9 +78,16 @@ Lo más importante es comprobar que la transcripción (Whisper) funciona en tu s
 Cada idea es una skill nueva en `.claude/skills/` y, si hace falta, un componente en
 `src/componentes/`. Pídeselo a Claude Code: "Crea una skill para…".
 
+## Material para los alumnos
+
+En `material-de-clase/`: 3 guiones de práctica, plantillas de pedidos para copiar y pegar, y
+hojas (CSV) de revisiones, costos por video y variaciones A/B.
+
 ## Cómo actualizar el kit para los alumnos
 
-1. Haz los cambios en este repositorio (tú o Claude) y súbelos a la rama `main`.
+1. Haz los cambios en este repositorio (tú o Claude) y súbelos a la rama `main`. Si cambias
+   una skill, edítala en `.claude/skills/` y ejecuta `npm run sincronizar-skills` para que
+   Codex (`.agents/skills/`) tenga la misma versión.
 2. Los alumnos descargan el ZIP de nuevo, o, si usaron Git, ejecutan `git pull`.
 3. Sus videos y ediciones no se pierden si copian su carpeta `proyecto/` y `public/` a la versión nueva.
 
