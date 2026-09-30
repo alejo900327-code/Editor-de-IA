@@ -1,0 +1,22 @@
+{
+  "video": null,
+  "duracionOriginal": 0,
+  "formato": {"ancho": 1080, "alto": 1920, "fps": 30},
+  "encuadre": "llenar",
+  "volumenVoz": 1,
+  "cortes": [],
+  "subtitulos": {
+    "activos": true,
+    "fuente": "Montserrat",
+    "tamano": 72,
+    "color": "#FFFFFF",
+    "colorResaltado": "#FFD400",
+    "borde": "#000000",
+    "posicionVertical": 0.7,
+    "mayusculas": true,
+    "msPorPagina": 900
+  },
+  "animaciones": [],
+  "musica": {"archivo": null, "volumen": 0.08},
+  "barraProgreso": false
+}

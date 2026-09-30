@@ -1,0 +1,9 @@
+node_modules/
+.whisper/
+out/
+entregas/*
+!entregas/.gitkeep
+public/videos/*
+!public/videos/.gitkeep
+proyecto/historial/
+.DS_Store
