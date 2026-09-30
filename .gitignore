@@ -7,3 +7,6 @@ public/videos/*
 !public/videos/.gitkeep
 proyecto/historial/
 .DS_Store
+.env
+public/broll/*
+!public/broll/.gitkeep

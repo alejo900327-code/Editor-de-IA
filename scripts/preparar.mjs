@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {parseMedia} from '@remotion/media-parser';
 import {nodeReader} from '@remotion/media-parser/node';
+import {aplicarMarca, leerMarca} from './marca.mjs';
 import {
 	argumentos,
 	fallar,
@@ -72,18 +73,23 @@ if (!info.durationInSeconds) {
 }
 
 const duracion = Math.floor(info.durationInSeconds * 100) / 100;
-guardarEdicion({
+const nueva = {
 	...anterior,
 	video: nombre,
 	duracionOriginal: duracion,
 	formato: {...FORMATOS[formato], fps: 30},
 	cortes: [{desde: 0, hasta: duracion}],
 	animaciones: [],
-});
+};
+const marca = leerMarca();
+guardarEdicion(marca?.configurada ? aplicarMarca(nueva, marca) : nueva);
 guardarJson(RUTA_TRANSCRIPCION, []);
 fs.writeFileSync(RUTA_TEXTO, 'Aun no hay transcripcion. Ejecuta: npm run transcribir\n');
 
 console.log(`\nVideo listo: public/videos/${nombre}`);
 console.log(`Duración: ${segundos(duracion)} | Original: ${info.dimensions?.width}x${info.dimensions?.height} a ${info.fps?.toFixed(2) ?? '?'} fps`);
 console.log(`Formato de salida: ${formato} ${FORMATOS[formato].ancho}x${FORMATOS[formato].alto} a 30 fps`);
+if (marca?.configurada) {
+	console.log(`Marca aplicada: ${marca.nombre || 'sin nombre'}`);
+}
 console.log('Siguiente paso: npm run transcribir');

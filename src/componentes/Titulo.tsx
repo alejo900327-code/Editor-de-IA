@@ -1,5 +1,5 @@
 import {AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
-import type {Animacion, Posicion} from '../edicion';
+import {type Animacion, edicion, type Posicion} from '../edicion';
 import {FUENTE_PRINCIPAL} from '../fuentes';
 
 export const alturaPosicion: Record<Posicion, string> = {
@@ -10,7 +10,8 @@ export const alturaPosicion: Record<Posicion, string> = {
 
 export const Titulo: React.FC<{animacion: Extract<Animacion, {tipo: 'titulo'}>}> = ({animacion}) => {
 	const frame = useCurrentFrame();
-	const {fps, durationInFrames} = useVideoConfig();
+	const {fps, durationInFrames, width, height} = useVideoConfig();
+	const escalaTexto = Math.min(width, height) / 1080;
 	const entrada = spring({frame, fps, config: {damping: 12, stiffness: 180}});
 	const salida = interpolate(frame, [durationInFrames - 8, durationInFrames], [1, 0], {
 		extrapolateLeft: 'clamp',
@@ -34,13 +35,13 @@ export const Titulo: React.FC<{animacion: Extract<Animacion, {tipo: 'titulo'}>}>
 				<div
 					style={{
 						maxWidth: '86%',
-						padding: '18px 36px',
+						padding: `${18 * escalaTexto}px ${36 * escalaTexto}px`,
 						borderRadius: 24,
-						backgroundColor: animacion.fondo ?? '#FFD400',
-						color: animacion.color ?? '#111111',
+						backgroundColor: animacion.fondo ?? edicion.estiloTitulos?.fondo ?? '#FFD400',
+						color: animacion.color ?? edicion.estiloTitulos?.color ?? '#111111',
 						fontFamily: FUENTE_PRINCIPAL,
 						fontWeight: 800,
-						fontSize: 78,
+						fontSize: 78 * escalaTexto,
 						lineHeight: 1.1,
 						textAlign: 'center',
 						boxShadow: '0 12px 40px rgba(0,0,0,0.35)',

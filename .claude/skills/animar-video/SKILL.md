@@ -19,6 +19,10 @@ Se definen en `animaciones` dentro de `proyecto/edicion.json`. Cada una empieza 
 Además: `musica` (archivo en `public/musica/`, `volumen` 0.05-0.12 para que no tape la voz)
 y `barraProgreso: true`.
 
+Hay más tipos con su propia skill: `emoji` (`/emojis`), `broll` (`/broll`) y `sonido`
+(`/efectos-sonido`). Los títulos usan los colores de `estiloTitulos` (los pone la marca), así
+que no hace falta poner `fondo` ni `color` salvo que quieras uno distinto.
+
 ## Cómo proponerlas
 
 1. Lee `proyecto/transcripcion.txt` y elige los momentos que lo merecen:
@@ -26,7 +30,8 @@ y `barraProgreso: true`.
    - **Números, listas y palabras clave**: `titulo` corto (máximo 4-5 palabras).
    - **Frases de énfasis** ("esto es lo más importante"): `zoom` de 1.5-2.5 s.
    - **Menciones a un producto, marca o web**: `imagen`, si el usuario tiene el archivo.
-   - **Llamado a la acción al final**: `titulo` con la acción real que dice el video.
+   - **Llamado a la acción al final**: `titulo` con la acción real que dice el video (o el
+     `llamadoAccion` de `proyecto/marca.json` si coincide con lo que dice).
 2. Muestra la propuesta como tabla antes de aplicarla:
 
    | Seg. | Frase | Efecto |

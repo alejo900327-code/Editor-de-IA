@@ -9,9 +9,12 @@
     "preparar": "node scripts/preparar.mjs",
     "transcribir": "node scripts/transcribir.mjs",
     "cortes": "node scripts/detectar-cortes.mjs",
+    "marca": "node scripts/marca.mjs",
+    "broll": "node scripts/buscar-broll.mjs",
+    "revisar": "tsc && node scripts/verificar.mjs",
     "verificar": "node scripts/verificar.mjs",
     "exportar": "node scripts/exportar.mjs",
-    "revisar": "tsc && node scripts/verificar.mjs"
+    "versiones": "node scripts/versiones.mjs"
   },
   "dependencies": {
     "@remotion/captions": "4.0.530",

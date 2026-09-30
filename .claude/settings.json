@@ -11,7 +11,10 @@
       "Bash(node --version)",
       "Bash(npm --version)",
       "Edit(proyecto/**)",
-      "Write(proyecto/**)"
+      "Write(proyecto/**)",
+      "Bash(npm run marca)",
+      "Bash(npm run broll:*)",
+      "Bash(npm run versiones:*)"
     ]
   }
 }

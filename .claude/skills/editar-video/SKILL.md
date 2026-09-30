@@ -20,6 +20,10 @@ Si no lo sabes aún, pregunta **en un solo mensaje**:
 
 Si falta algo que no es esencial, usa el valor por defecto y díselo.
 
+Si `proyecto/marca.json` tiene `configurada: true`, no preguntes colores, logo ni música:
+ya están en la marca. Si no está configurada y el usuario va a hacer más videos, ofrécele
+crearla con `/marca` (un minuto y no tendrá que repetirlo).
+
 ## 1. Preparar y transcribir
 
 1. Si `node_modules` no existe, sigue antes la skill `/instalar-editor`.
@@ -40,12 +44,13 @@ Aplica la skill `/subtitular-video` con el estilo del briefing.
 ## 4. Animaciones
 
 Aplica la skill `/animar-video`: propón primero la lista de animaciones (frase -> efecto) y
-aplícala cuando el usuario diga que sí.
+aplícala cuando el usuario diga que sí. En la misma propuesta puedes incluir emojis
+(`/emojis`), b-roll (`/broll`) y efectos de sonido (`/efectos-sonido`), sin saturar.
 
 ## 5. Muestra y exportación
 
 Aplica la skill `/exportar-video`: primero la muestra de 8 segundos y, con la aprobación,
-el video completo.
+el video completo. Si es para varias redes, ofrece `/versiones`.
 
 ## Reglas
 

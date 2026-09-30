@@ -1,7 +1,8 @@
 # Editor de video con IA — Millonarios Conscientes
 
-Edita tus videos hablando con Claude: **cortes**, **subtítulos animados** y **animaciones**,
-sin saber programar y sin pagar programas de edición.
+Edita tus videos hablando con Claude: **cortes**, **subtítulos animados**, **animaciones**,
+**emojis**, **b-roll**, **efectos de sonido**, **tu marca** y **varios formatos**, sin saber
+programar y sin pagar programas de edición.
 
 Le dices a Claude qué quieres ("quita los silencios", "pon los subtítulos en amarillo",
 "agrega un título cuando digo los 3 errores") y él lo hace con código (Remotion) en tu computadora.
@@ -75,7 +76,19 @@ Escribe en Claude:
 Claude revisa tu computadora, instala lo necesario y hace una prueba. Tarda unos minutos.
 Si te pide permiso para ejecutar un comando, lee qué hace y acepta.
 
-## Paso 6 — Edita tu primer video
+## Paso 6 — Crea tu kit de marca (recomendado, una sola vez)
+
+Escribe:
+
+```
+/marca
+```
+
+Claude te pregunta tus colores, tu logo, tu llamado a la acción y tu estilo. A partir de ahí
+**todos tus videos salen con tu marca** sin repetirlo. Antes, copia tu logo (PNG) a la
+carpeta `public/imagenes/`.
+
+## Paso 7 — Edita tu primer video
 
 Escribe:
 
@@ -96,7 +109,7 @@ Luego, él solo:
 5. **Exporta una muestra de 8 segundos** para que la revises en el móvil.
 6. Cuando la apruebas, **exporta el video completo** a la carpeta `entregas/`.
 
-## Paso 7 — Mira la vista previa (opcional)
+## Paso 8 — Mira la vista previa (opcional)
 
 Pídele a Claude *"abre la vista previa"* o escribe en la terminal `npm run estudio`.
 Se abre **http://localhost:3000** en el navegador con tu video y se actualiza solo cada vez
@@ -125,13 +138,45 @@ que Claude hace un cambio.
 - "Agrega la música `public/musica/fondo.mp3` bajita"
 - "Agrega una barra de progreso arriba"
 
-**Exportar**
+**Emojis, b-roll y sonidos**
+- "Pon emojis en las palabras clave, sin pasarte"
+- "Pon un 💰 cuando hablo de ganancias"
+- "Pon b-roll cuando hablo de mi primer cliente"
+- "Añade efectos de sonido a los títulos, bajitos"
+- "Quita el sonido del zoom"
+
+**Exportar y versiones**
 - "Exporta una muestra desde el segundo 15"
 - "Exporta el video final"
-- "Hazme también la versión horizontal para YouTube"
+- "Hazme también la versión cuadrada y la horizontal para YouTube"
 
-Skills disponibles: `/instalar-editor`, `/editar-video`, `/cortar-video`,
-`/subtitular-video`, `/animar-video` y `/exportar-video`.
+### Todas las skills
+
+| Skill | Para qué |
+|---|---|
+| `/instalar-editor` | Instalar y comprobar todo (la primera vez) |
+| `/marca` | Tus colores, logo, música y llamado a la acción, para todos los videos |
+| `/editar-video` | **Todo el proceso de principio a fin** |
+| `/cortar-video` | Silencios, muletillas, tomas repetidas o partes concretas |
+| `/subtitular-video` | Subtítulos: corregir palabras, color, tamaño, posición |
+| `/animar-video` | Títulos, imágenes, zoom, música, barra de progreso |
+| `/emojis` | Emojis animados junto a las palabras clave |
+| `/broll` | Imágenes y clips de apoyo (propios o gratis de Pexels) |
+| `/efectos-sonido` | Pop, whoosh, ding e impacto sincronizados |
+| `/exportar-video` | Muestra de 8 segundos y video final |
+| `/versiones` | El mismo video en vertical, cuadrado y horizontal |
+
+### B-roll gratis con Pexels (opcional)
+
+Para que Claude descargue imágenes y clips gratis, crea una clave en
+https://www.pexels.com/api/ (registro gratuito). Luego crea en la carpeta del editor un
+archivo llamado `.env` con esta línea (mira el ejemplo en `.env.ejemplo`):
+
+```
+PEXELS_API_KEY=tu_clave
+```
+
+No compartas esa clave ni la pegues en el chat.
 
 ---
 
@@ -142,8 +187,11 @@ Mi-Editor/
 ├── public/videos/      ← tus videos (Claude los copia aquí)
 ├── public/imagenes/    ← pon aquí tu logo e imágenes
 ├── public/musica/      ← pon aquí tu música
+├── public/broll/       ← imágenes y clips de apoyo
+├── public/sonidos/     ← efectos de sonido (pop, whoosh, ding, impacto)
 ├── entregas/           ← AQUÍ salen tus videos terminados
 ├── proyecto/
+│   ├── marca.json           ← tu kit de marca
 │   ├── edicion.json         ← la edición (cortes, estilo, animaciones)
 │   ├── transcripcion.txt    ← lo que dices, con tiempos
 │   └── versiones/           ← copias de seguridad de cada etapa
@@ -169,3 +217,5 @@ Mi-Editor/
   hasta 3 empleados; las empresas más grandes necesitan licencia: https://www.remotion.dev/license
 - Transcripción con [Whisper](https://github.com/ggerganov/whisper.cpp) (licencia MIT).
 - Fuente Montserrat (SIL Open Font License, incluida en `public/fuentes`).
+- Efectos de sonido creados para este kit (uso libre).
+- B-roll opcional de [Pexels](https://www.pexels.com) (licencia gratuita de Pexels).

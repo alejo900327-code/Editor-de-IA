@@ -1,0 +1,8 @@
+Efectos de sonido generados por síntesis para este kit (sin derechos de terceros).
+Puedes usarlos libremente en tus videos. Para añadir otros, copia archivos .wav o .mp3
+a esta carpeta (solo sonidos que tengas derecho a usar).
+
+pop.wav      -> títulos, imágenes y emojis
+whoosh.wav   -> zoom y b-roll (transiciones)
+ding.wav     -> logros, números, "correcto"
+impacto.wav  -> revelaciones, frases fuertes

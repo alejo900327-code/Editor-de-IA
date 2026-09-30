@@ -23,7 +23,7 @@ Lo más importante es comprobar que la transcripción (Whisper) funciona en tu s
 | 10-25 | Instalación | Pasos 1-5 del README juntos; ayuda a quien se quede atascado |
 | 25-40 | Demo en vivo | `/editar-video` con tu video, explicando cada etapa |
 | 40-70 | Práctica | Cada alumno edita su video: cortes, subtítulos y una animación |
-| 70-85 | Ajustes | Pedir cambios en lenguaje natural (colores, zoom, logo, música) |
+| 70-85 | Nivel pro | `/marca`, `/emojis`, `/efectos-sonido`, `/broll` y `/versiones` |
 | 85-90 | Cierre | Exportar, compartir resultados y siguientes pasos |
 
 ## Guion de la demo (para que se vea "magia")
@@ -49,27 +49,31 @@ Lo más importante es comprobar que la transcripción (Whisper) funciona en tu s
 | Claude pide permiso a cada paso | Normal la primera vez; el kit ya autoriza los comandos del editor en `.claude/settings.json` |
 | Video de iPhone en HDR que se ve lavado | Exportarlo desde el móvil como "Más compatible" (H.264) |
 
-## ¿Qué más meterle? (hoja de ruta)
+## Ya incluido en el kit
 
-Ordenado de mayor a menor impacto para tus alumnos:
+- Kit de marca (`/marca`): colores, logo como marca de agua, música, CTA y estilo, aplicados
+  solos a cada video nuevo.
+- Efectos de sonido (`/efectos-sonido`): pop, whoosh, ding e impacto, automáticos con cada
+  animación o en frases concretas.
+- B-roll (`/broll`): material propio o descargado gratis de Pexels, a pantalla completa o en ventana.
+- Emojis animados (`/emojis`) junto a las palabras clave.
+- Varias versiones (`/versiones`): vertical, cuadrado y horizontal, con fondo desenfocado.
 
-1. **Kit de marca**: un archivo `marca.json` con colores, fuente, logo y CTA por alumno, que
-   se aplique solo a cada video nuevo.
-2. **Efectos de sonido** (pop, whoosh) sincronizados con los títulos y los zooms: hacen que
-   el video "se sienta" editado.
-3. **B-roll automático**: buscar imágenes o clips de stock gratuitos (API de Pexels, gratis
-   con registro) según lo que se dice.
-4. **Emojis y stickers animados** junto a palabras clave.
-5. **Reencuadre inteligente**: detectar la cara y seguirla al pasar de horizontal a vertical.
-6. **Música con ducking**: que baje sola cuando hablas.
-7. **Varias versiones de una vez**: vertical, cuadrado y horizontal, o 3 ganchos distintos
-   para testear anuncios.
-8. **Subtítulos traducidos** (inglés/portugués) y archivo `.srt` para YouTube.
-9. **Miniatura (thumbnail)** generada a partir de un frame del video.
-10. **Skills técnicas oficiales de Remotion** (`npx skills add remotion-dev/skills`), que
-    ayudan a Claude a crear efectos nuevos con mejores prácticas.
+**Pruébalo hoy también:** el b-roll de Pexels necesita tu propia clave gratuita en `.env`
+(no se pudo probar en el entorno donde se construyó el kit).
 
-Cada punto es una skill nueva en `.claude/skills/` y, si hace falta, un componente en
+## ¿Qué más meterle? (siguientes ideas)
+
+1. **Reencuadre inteligente**: detectar la cara y seguirla al pasar de horizontal a vertical.
+2. **Música con ducking**: que baje sola cuando hablas.
+3. **Quitar muletillas automático**: una lista de muletillas por alumno que se corte sola.
+4. **Varios ganchos**: 3 inicios distintos del mismo video para testear anuncios.
+5. **Subtítulos traducidos** (inglés/portugués) y archivo `.srt` para YouTube.
+6. **Miniatura (thumbnail)** generada a partir de un frame del video.
+7. **Skills técnicas oficiales de Remotion** (`npx skills add remotion-dev/skills`), que
+   ayudan a Claude a crear efectos nuevos con mejores prácticas.
+
+Cada idea es una skill nueva en `.claude/skills/` y, si hace falta, un componente en
 `src/componentes/`. Pídeselo a Claude Code: "Crea una skill para…".
 
 ## Cómo actualizar el kit para los alumnos

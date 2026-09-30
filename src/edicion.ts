@@ -5,6 +5,8 @@ import datos from '../proyecto/edicion.json';
 import datosTranscripcion from '../proyecto/transcripcion.json';
 
 export type Posicion = 'arriba' | 'centro' | 'abajo';
+export type Lado = 'izquierda' | 'centro' | 'derecha';
+export type Esquina = 'arriba-izquierda' | 'arriba-derecha' | 'abajo-izquierda' | 'abajo-derecha';
 
 export type Tramo = {desde: number; hasta: number};
 
@@ -26,7 +28,24 @@ export type Animacion =
 			posicion?: Posicion;
 			ancho?: number;
 	  }
-	| {tipo: 'zoom'; en: number; duracion: number; escala?: number};
+	| {tipo: 'zoom'; en: number; duracion: number; escala?: number}
+	| {
+			tipo: 'emoji';
+			en: number;
+			duracion: number;
+			emoji: string;
+			posicion?: Posicion;
+			lado?: Lado;
+			tamano?: number;
+	  }
+	| {
+			tipo: 'broll';
+			en: number;
+			duracion: number;
+			archivo: string;
+			modo?: 'completo' | 'ventana';
+	  }
+	| {tipo: 'sonido'; en: number; archivo: string; volumen?: number};
 
 export type EstiloSubtitulos = {
 	activos: boolean;
@@ -40,18 +59,41 @@ export type EstiloSubtitulos = {
 	msPorPagina: number;
 };
 
+export type Encuadre = 'llenar' | 'ajustar' | 'desenfocado';
+
 export type Edicion = {
 	video: string | null;
 	duracionOriginal: number;
 	formato: {ancho: number; alto: number; fps: number};
-	encuadre: 'llenar' | 'ajustar';
+	encuadre: Encuadre;
 	volumenVoz: number;
 	cortes: Tramo[];
 	subtitulos: EstiloSubtitulos;
+	estiloTitulos?: {fondo: string; color: string};
+	marcaDeAgua?: {archivo: string | null; esquina: Esquina; ancho: number; opacidad: number};
+	sonidos?: {
+		activos: boolean;
+		volumen: number;
+		alTitulo: string | null;
+		alZoom: string | null;
+		alEmoji: string | null;
+		alBroll: string | null;
+	};
 	animaciones: Animacion[];
 	musica: {archivo: string | null; volumen: number};
 	barraProgreso: boolean;
 };
+
+export const FORMATOS = {
+	vertical: {ancho: 1080, alto: 1920},
+	horizontal: {ancho: 1920, alto: 1080},
+	cuadrado: {ancho: 1080, alto: 1080},
+} as const;
+
+export type NombreFormato = keyof typeof FORMATOS;
+
+// Props que permiten exportar otra versión sin tocar edicion.json.
+export type PropsVersion = {formato?: NombreFormato; encuadre?: Encuadre};
 
 export const edicion = datos as Edicion;
 export const transcripcion = datosTranscripcion as Caption[];

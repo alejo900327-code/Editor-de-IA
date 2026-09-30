@@ -6,8 +6,9 @@ import '../fuentes';
 
 const Pagina: React.FC<{pagina: TikTokPage}> = ({pagina}) => {
 	const frame = useCurrentFrame();
-	const {fps} = useVideoConfig();
+	const {fps, width, height} = useVideoConfig();
 	const estilo = edicion.subtitulos;
+	const tamano = estilo.tamano * (Math.min(width, height) / 1080);
 	const ahoraMs = pagina.startMs + (frame / fps) * 1000;
 	const entrada = spring({frame, fps, config: {damping: 200}, durationInFrames: 5});
 
@@ -23,11 +24,11 @@ const Pagina: React.FC<{pagina: TikTokPage}> = ({pagina}) => {
 					textAlign: 'center',
 					fontFamily: estilo.fuente,
 					fontWeight: 800,
-					fontSize: estilo.tamano,
+					fontSize: tamano,
 					lineHeight: 1.15,
 					color: estilo.color,
 					textTransform: estilo.mayusculas ? 'uppercase' : 'none',
-					WebkitTextStroke: `${Math.round(estilo.tamano / 6)}px ${estilo.borde}`,
+					WebkitTextStroke: `${Math.round(tamano / 6)}px ${estilo.borde}`,
 					paintOrder: 'stroke',
 				}}
 			>
