@@ -7,7 +7,7 @@
 // Cualquier otra opción se pasa tal cual a "remotion render".
 import fs from 'node:fs';
 import path from 'node:path';
-import {argumentos, fallar, leerEdicion, RAIZ, remotion} from './lib.mjs';
+import {argumentos, fallar, leerEdicion, marcaDeTiempo, RAIZ, remotion} from './lib.mjs';
 
 const FORMATOS = ['vertical', 'horizontal', 'cuadrado'];
 const ENCUADRES = ['llenar', 'ajustar', 'desenfocado'];
@@ -22,7 +22,7 @@ if (encuadre !== undefined && !ENCUADRES.includes(encuadre)) {
 }
 const edicion = leerEdicion();
 const nombreBase = path.basename(edicion.video ?? 'video', path.extname(edicion.video ?? ''));
-const hora = new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-');
+const hora = marcaDeTiempo();
 const sufijo = formato ? `-${formato}` : '';
 
 const args = ['render', 'src/index.ts', 'EditorIA'];

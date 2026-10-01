@@ -16,6 +16,9 @@ Si hay transcripción (`proyecto/transcripcion.json` no está vacío), ejecuta `
 - Ritmo normal: `--silencio 0.6` (por defecto).
 - Ritmo más rápido tipo TikTok: `--silencio 0.35 --margen 0.1`.
 - Si el usuario nota que se "comen" el principio o el final de las palabras, sube `--margen` a 0.2.
+- Los silencios se miden con el volumen real del audio. Si hay mucho ruido de fondo
+  (ventilador, calle, música) y casi no quita nada, prueba `--ruido -30`; si corta
+  partes donde se habla bajito, prueba `--ruido -40`.
 
 ## 2. Muletillas, errores y tomas repetidas (con criterio)
 
