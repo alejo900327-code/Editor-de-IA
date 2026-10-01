@@ -26,7 +26,7 @@ sin jerga, y dile siempre cuál es el siguiente paso.
 |---|---|
 | `npm run preparar -- "ruta/video.mp4" [--formato vertical\|horizontal\|cuadrado]` | Carga un video nuevo (guarda el proyecto anterior en `proyecto/historial/`) |
 | `npm run transcribir [-- --modelo small\|medium]` | Transcribe con Whisper en local (gratis) |
-| `npm run cortes [-- --silencio 0.6 --margen 0.15 --ruido -35]` | Quita los silencios automáticamente (mide las pausas reales del audio) |
+| `npm run cortes [-- --silencio 0.6 --margen 0.15 --ruido -40]` | Quita los silencios automáticamente (mide las pausas reales del audio) |
 | `npm run marca` | Aplica `proyecto/marca.json` a la edición actual |
 | `npm run broll -- "búsqueda" [--tipo foto\|video]` | Descarga b-roll gratis de Pexels a `public/broll/` (necesita `PEXELS_API_KEY` en `.env`) |
 | `npm run revisar` | Revisa el código y `edicion.json`: ejecútalo después de CADA cambio |

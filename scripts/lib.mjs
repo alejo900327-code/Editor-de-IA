@@ -1,6 +1,7 @@
 // Utilidades compartidas por los scripts del editor.
 import {spawnSync} from 'node:child_process';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
@@ -57,29 +58,79 @@ export const remotion = (args, {silencioso = false} = {}) => {
 	return r;
 };
 
-// Pausas reales del audio (ffmpeg silencedetect), en segundos del video original.
-// ruido: volumen en dB por debajo del cual se considera silencio.
-export const detectarSilencios = (archivo, {ruido = -35, minimo = 0.3} = {}) => {
-	const r = remotion(
-		['ffmpeg', '-hide_banner', '-nostats', '-i', archivo, '-vn', '-af', `silencedetect=noise=${ruido}dB:d=${minimo}`, '-f', 'null', '-'],
-		{silencioso: true},
-	);
-	const silencios = [];
-	let inicio = null;
-	for (const linea of r.stderr.toString().split('\n')) {
-		const empieza = linea.match(/silence_start: (-?[\d.]+)/);
-		const termina = linea.match(/silence_end: ([\d.]+)/);
-		if (empieza) {
-			inicio = Math.max(0, Number(empieza[1]));
+// Pausas reales del audio, en segundos del video original. Se mide el volumen medio
+// cada 50 ms (no los picos): así los golpes cortos al tocar o mover el celular no
+// cuentan como voz. ruido: volumen en dB por debajo del cual se considera silencio.
+export const detectarSilencios = (archivo, {ruido = -40, minimo = 0.3, golpe = 0.15} = {}) => {
+	const carpeta = fs.mkdtempSync(path.join(os.tmpdir(), 'editor-ia-'));
+	const wav = path.join(carpeta, 'audio.wav');
+	let datos;
+	try {
+		remotion(['ffmpeg', '-y', '-i', archivo, '-vn', '-ac', '1', '-ar', '16000', '-c:a', 'pcm_s16le', wav], {
+			silencioso: true,
+		});
+		datos = fs.readFileSync(wav);
+	} finally {
+		fs.rmSync(carpeta, {recursive: true, force: true});
+	}
+
+	// Busca el bloque "data" del WAV (16 bits, mono, 16000 Hz).
+	let inicioDatos = 0;
+	let largoDatos = 0;
+	for (let o = 12; o + 8 <= datos.length; ) {
+		const tamano = datos.readUInt32LE(o + 4);
+		if (datos.toString('ascii', o, o + 4) === 'data') {
+			inicioDatos = o + 8;
+			largoDatos = Math.min(tamano, datos.length - inicioDatos);
+			break;
 		}
-		if (termina && inicio !== null) {
-			silencios.push({desde: inicio, hasta: Number(termina[1])});
-			inicio = null;
+		o += 8 + tamano + (tamano % 2);
+	}
+
+	const VENTANA = 0.05;
+	const muestras = 16000 * VENTANA;
+	const callado = [];
+	for (let i = inicioDatos; i + muestras * 2 <= inicioDatos + largoDatos; i += muestras * 2) {
+		let suma = 0;
+		for (let j = 0; j < muestras; j++) {
+			const v = datos.readInt16LE(i + j * 2) / 32768;
+			suma += v * v;
+		}
+		callado.push(10 * Math.log10(suma / muestras + 1e-12) < ruido);
+	}
+
+	// Tramos de silencio tal cual.
+	const tramos = [];
+	for (let i = 0; i < callado.length; ) {
+		if (!callado[i]) {
+			i++;
+			continue;
+		}
+		let j = i;
+		while (j < callado.length && callado[j]) {
+			j++;
+		}
+		tramos.push({desde: i * VENTANA, hasta: j === callado.length ? Infinity : j * VENTANA});
+		i = j;
+	}
+
+	// Un golpe corto (tocar o mover el celular) entre dos silencios largos no es voz: se
+	// unen los dos silencios. Entre palabras los silencios son mucho más cortos.
+	const unidos = [];
+	for (const tramo of tramos) {
+		const ultimo = unidos[unidos.length - 1];
+		if (
+			ultimo &&
+			tramo.desde - ultimo.hasta <= golpe + 1e-9 &&
+			ultimo.hasta - ultimo.desde >= 0.25 &&
+			tramo.hasta - tramo.desde >= 0.25
+		) {
+			ultimo.hasta = tramo.hasta;
+		} else {
+			unidos.push({...tramo});
 		}
 	}
-	if (inicio !== null) {
-		silencios.push({desde: inicio, hasta: Infinity});
-	}
+	const silencios = unidos.filter((t) => t.hasta - t.desde >= minimo);
 	return silencios;
 };
 

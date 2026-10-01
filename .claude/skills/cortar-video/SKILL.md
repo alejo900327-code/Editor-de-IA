@@ -17,8 +17,11 @@ Si hay transcripción (`proyecto/transcripcion.json` no está vacío), ejecuta `
 - Ritmo más rápido tipo TikTok: `--silencio 0.35 --margen 0.1`.
 - Si el usuario nota que se "comen" el principio o el final de las palabras, sube `--margen` a 0.2.
 - Los silencios se miden con el volumen real del audio. Si hay mucho ruido de fondo
-  (ventilador, calle, música) y casi no quita nada, prueba `--ruido -30`; si corta
-  partes donde se habla bajito, prueba `--ruido -40`.
+  (ventilador, calle, música) y casi no quita nada, prueba `--ruido -35`; si corta
+  partes donde se habla bajito, prueba `--ruido -45`.
+- Si el usuario cambia de ángulo o mueve el celular en una pausa, el movimiento se corta
+  solo (los golpes al mover el celular no cuentan como voz). Si aún se ve, revisa el
+  tramo en `cortes` y empieza el siguiente cuando la cámara ya esté quieta.
 
 ## 2. Muletillas, errores y tomas repetidas (con criterio)
 

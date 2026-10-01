@@ -1,8 +1,10 @@
-// Uso: npm run cortes [-- --silencio 0.6] [--margen 0.15] [--ruido -35]
+// Uso: npm run cortes [-- --silencio 0.6] [--margen 0.15] [--ruido -40]
 // Quita los silencios midiendo el volumen real del audio: se conserva la voz y se
 // corta toda pausa más larga que --silencio segundos. --ruido es el volumen (dB) por
-// debajo del cual se considera silencio; con mucho ruido de fondo prueba -30.
-// Ninguna palabra de la transcripción se queda fuera, aunque Whisper la marque tarde.
+// debajo del cual se considera silencio; con mucho ruido de fondo prueba -35.
+// Ninguna palabra de la transcripción se queda fuera, aunque Whisper la marque tarde;
+// las que caen enteras dentro de una pausa (Whisper "oye" palabras en el ruido, por
+// ejemplo al mover el celular para cambiar de ángulo) se cortan con la pausa.
 import path from 'node:path';
 import {
 	argumentos,
@@ -19,7 +21,7 @@ import {
 const opciones = argumentos();
 const silencio = Number(opciones.silencio ?? 0.6);
 const margen = Number(opciones.margen ?? 0.15);
-const ruido = Number(opciones.ruido ?? -35);
+const ruido = Number(opciones.ruido ?? -40);
 
 const edicion = leerEdicion();
 if (!edicion.video) {
@@ -46,11 +48,15 @@ if (desde < duracion) {
 }
 tramos = tramos.map((t) => ({desde: Math.max(0, t.desde - margen), hasta: Math.min(duracion, t.hasta + margen)}));
 
-// Si Whisper marca una palabra dentro de una pausa, se alarga el tramo más cercano
-// para no perder su subtítulo.
+// Si Whisper marca una palabra un poco tarde (empieza en la pausa pero termina en la
+// voz), se alarga el tramo más cercano para no perder su subtítulo. Una palabra que cae
+// entera dentro de una pausa no se dijo: es ruido y se corta.
 for (const p of palabras) {
 	const t = p.startMs / 1000;
 	if (tramos.some((tramo) => t >= tramo.desde && t < tramo.hasta)) {
+		continue;
+	}
+	if (pausas.some((pausa) => pausa.desde <= t && p.endMs / 1000 <= pausa.hasta)) {
 		continue;
 	}
 	const cercano = tramos.reduce(
