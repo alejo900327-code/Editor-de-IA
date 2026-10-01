@@ -6,7 +6,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {downloadWhisperModel, installWhisperCpp, toCaptions, transcribe} from '@remotion/install-whisper-cpp';
 import {
+	ajustarPalabras,
 	argumentos,
+	detectarSilencios,
 	fallar,
 	guardarJson,
 	leerEdicion,
@@ -41,6 +43,7 @@ remotion(['ffmpeg', '-y', '-i', path.join(PUBLIC, 'videos', edicion.video), '-ar
 	silencioso: true,
 });
 
+let ultimoPorcentaje = -1;
 console.log('4/4 Transcribiendo (en un portátil normal tarda aprox. lo mismo que dura el video)...');
 const resultado = await transcribe({
 	inputPath: audio,
@@ -50,9 +53,22 @@ const resultado = await transcribe({
 	language: idioma,
 	tokenLevelTimestamps: true,
 	splitOnWord: true,
+	printOutput: false,
+	onProgress: (progreso) => {
+		const porcentaje = Math.floor(progreso * 10) * 10;
+		if (porcentaje > ultimoPorcentaje) {
+			ultimoPorcentaje = porcentaje;
+			console.log(`    ${porcentaje}%`);
+		}
+	},
 });
 const {captions} = toCaptions({whisperCppOutput: resultado});
-const palabras = captions.filter((c) => c.text.trim() !== '' && !/^\[.*\]$/.test(c.text.trim()));
+// Recorta las palabras que Whisper estira sobre las pausas, para que los
+// subtítulos no se queden en pantalla durante los silencios.
+const palabras = ajustarPalabras(
+	captions.filter((c) => c.text.trim() !== '' && !/^\[.*\]$/.test(c.text.trim())),
+	detectarSilencios(audio),
+);
 guardarJson(RUTA_TRANSCRIPCION, palabras);
 
 // Versión legible: una frase por línea con su tiempo en el video ORIGINAL.
